@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.car.R
 import kotlinx.android.synthetic.main.login_fragment.*
 
@@ -33,9 +36,12 @@ class LoginFragment : Fragment() {
 
     private fun bindUI() {
         btLogin.setOnClickListener {
-//            val action = MainFragmentDirections.action_mainFragment_to_loginFragment()
-//            it.findNavController().navigate(action)
+            it.findNavController().navigate(R.id.action_loginFragment_to_usersListFragment)
         }
+
+        val items = listOf("India", "Singapore", "Malaysia", "Australia")
+        val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
+        (textCountry.editText as? AutoCompleteTextView)?.setAdapter(adapter)
     }
 
 }

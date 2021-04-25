@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.navigation.findNavController
 import com.example.car.R
+import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment : Fragment() {
 
@@ -26,7 +28,32 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
-        view?.findNavController()?.navigate(R.id.action_mainFragment_to_loginFragment)
+        carMotionLayout.apply {
+            setTransitionListener(object : MotionLayout.TransitionListener{
+                override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
+//                    TODO("Not yet implemented")
+                }
+
+                override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
+//                    TODO("Not yet implemented")
+                }
+
+                override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+                    view?.findNavController()?.navigate(R.id.action_mainFragment_to_loginFragment)
+                }
+
+                override fun onTransitionTrigger(
+                    p0: MotionLayout?,
+                    p1: Int,
+                    p2: Boolean,
+                    p3: Float
+                ) {
+//                    TODO("Not yet implemented")
+                }
+
+            })
+        }
+
     }
 
 }
