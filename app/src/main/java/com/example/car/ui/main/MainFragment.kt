@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import com.example.car.R
 
 class MainFragment : Fragment() {
@@ -25,6 +26,7 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
+        view?.findNavController()?.navigate(R.id.action_mainFragment_to_loginFragment)
     }
 
 }
