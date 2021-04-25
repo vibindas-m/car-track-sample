@@ -1,17 +1,21 @@
 package com.example.car.ui.user
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.car.R
+import com.example.car.domain.model.Event
+import com.example.car.domain.model.Result
+import com.example.car.ui.UserViewModel
 import com.example.car.ui.adapter.UserListAdapter
 import com.example.car.ui.model.UserDataModel
 import kotlinx.android.synthetic.main.users_list_fragment.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class UsersListFragment : Fragment() {
 
@@ -19,7 +23,12 @@ class UsersListFragment : Fragment() {
         fun newInstance() = UsersListFragment()
     }
 
-    private lateinit var viewModel: UsersListViewModel
+    private val viewModel: UserViewModel by sharedViewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.userListEventTrigger.postValue(Event(Unit))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +39,6 @@ class UsersListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(UsersListViewModel::class.java)
         bindUI()
     }
 
@@ -44,9 +52,32 @@ class UsersListFragment : Fragment() {
         })
         recyclerUser.layoutManager = LinearLayoutManager(activity)
         recyclerUser.adapter = bookListAdapter
-        bookListAdapter.setData(listOf(UserDataModel(userName = "Leanne Graham", "1-770-736-8031 x56442"),
-            UserDataModel(userName = "LErvin Howell", "010-692-6593 x09125"),
-            UserDataModel(userName = "Clementine Bauch", "1-463-123-4447")))
+        bookListAdapter.setData(listOf())
+        viewModel.userList.observe(viewLifecycleOwner, {
+            it?.let {
+                bookListAdapter.setData(it)
+            }
+        })
+
+        viewModel.userListEvent.observe(viewLifecycleOwner, userListObserver)
     }
 
+    private val userListObserver = Observer<Result<List<UserDataModel>>> {
+        if (it is Result.Loading) {
+            progressBar.show()
+        } else {
+            progressBar.hide()
+            if (it is Result.Success) {
+                viewModel.updateUser(it.data)
+            }
+            if (it is Result.Failure) {
+                showError(it.errorMsg)
+            }
+        }
+    }
+
+    private fun showError(errorMsg: String) {
+        errorText.visibility = View.VISIBLE
+        errorText.text = errorMsg
+    }
 }

@@ -3,10 +3,13 @@ package com.example.car
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
+import com.example.car.ui.UserViewModel
 import com.example.car.ui.main.MainFragment
+import org.koin.android.ext.android.get
 
 class MainActivity : AppCompatActivity() {
 
+    private val viewModel: UserViewModel = get()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
