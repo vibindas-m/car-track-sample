@@ -18,11 +18,6 @@ import kotlinx.android.synthetic.main.users_list_fragment.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class UsersListFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = UsersListFragment()
-    }
-
     private val viewModel: UserViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +42,8 @@ class UsersListFragment : Fragment() {
         bookListAdapter.setOnItemClickListener(object :
             UserListAdapter.OnItemClickListener {
             override fun onClick(view: View, data: UserDataModel) {
-                view.findNavController().navigate(R.id.action_usersListFragment_to_detailsFragment)
+                viewModel.selectedUser(data)
+                view.findNavController().navigate(R.id.action_usersListFragment_to_mapsFragment)
             }
         })
         recyclerUser.layoutManager = LinearLayoutManager(activity)
@@ -68,7 +64,7 @@ class UsersListFragment : Fragment() {
         } else {
             progressBar.hide()
             if (it is Result.Success) {
-                viewModel.updateUser(it.data)
+                viewModel.updateUserList(it.data)
             }
             if (it is Result.Failure) {
                 showError(it.errorMsg)

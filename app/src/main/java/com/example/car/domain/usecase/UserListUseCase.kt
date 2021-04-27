@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import com.example.car.domain.model.*
 import com.example.car.domain.repository.UserRepo
 import com.example.car.ui.model.UserDataModel
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class UserListUseCase(private val userRepo: UserRepo) : UseCase<LiveData<Result<List<UserDataModel>>>>,
+class UserListUseCase(private val userRepo: UserRepo) :
+    UseCase<LiveData<Result<List<UserDataModel>>>>,
     CoroutineScope,
     Cancellable {
     var job: Job? = null
@@ -40,7 +42,17 @@ class UserListUseCase(private val userRepo: UserRepo) : UseCase<LiveData<Result<
 
 private fun List<User>.getUserModelList(): List<UserDataModel> {
     return this.map {
-        UserDataModel(userName = it.name ?: "",
-        mobile = it.phone ?: "")
+        UserDataModel(
+            userName = it.name ?: "",
+            mobile = it.phone ?: "",
+            latLang = LatLng(
+                it.address?.geo?.lat?.toDoubleOrNull() ?: 0.0,
+                it.address?.geo?.lng?.toDoubleOrNull() ?: 0.0
+            ),
+            address = "${it.address?.street}\n${it.address?.suite}\n${it.address?.city}\n${it.address?.zipcode}",
+            company = "${it.company?.name}\n${it.company?.catchPhrase}\n${it.company?.bs}",
+            web = it.website ?: "",
+            mail = it.email ?: ""
+        )
     }
 }

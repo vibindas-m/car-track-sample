@@ -14,12 +14,6 @@ import kotlinx.android.synthetic.main.login_fragment.*
 
 class LoginFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = LoginFragment()
-    }
-
-    private lateinit var viewModel: LoginViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,7 +23,6 @@ class LoginFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         bindUI()
     }
 
@@ -42,6 +35,10 @@ class LoginFragment : Fragment() {
         val items = listOf("India", "Singapore", "Malaysia", "Australia")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         (textCountry.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+
+
+        //TODO: validate filed to enable button
+        btLogin.isEnabled = true
     }
 
 }

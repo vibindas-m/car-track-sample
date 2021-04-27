@@ -31,10 +31,18 @@
         <action
             android:id="@+id/action_usersListFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_usersListFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.car.ui.details.DetailsFragment"
         android:label="details_fragment"
         tools:layout="@layout/details_fragment" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.car.ui.details.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 </navigation>
