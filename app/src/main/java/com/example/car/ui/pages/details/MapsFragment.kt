@@ -1,8 +1,10 @@
-package com.example.car.ui.details
+package com.example.car.ui.pages.details
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,12 +43,12 @@ class MapsFragment : Fragment() {
         viewModel.selectedUser.observe(viewLifecycleOwner, {
             it?.let {
                 googleMap.addMarker(
-                    MarkerOptions().position(it.latLang).title(it.userName).draggable(false).icon(
+                    MarkerOptions().position(it.latLang).title(it.userName).icon(
                         bitmapFromVector(
                             requireContext(),
                             R.drawable.ic_car_pointer
                         )
-                    )
+                    ).visible(true).draggable(false)
                 )
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(it.latLang))
                 showBottomSheet(it)
@@ -55,6 +57,7 @@ class MapsFragment : Fragment() {
 
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f))
         googleMap.uiSettings.isZoomGesturesEnabled = false
+        googleMap.uiSettings.isScrollGesturesEnabled = false
 
     }
 
@@ -65,20 +68,20 @@ class MapsFragment : Fragment() {
         webBt.apply {
             text = userDataModel.web
             setOnClickListener {
-
+                openURL(userDataModel.web)
             }
         }
 
         mailBt.apply {
             text = userDataModel.mail
             setOnClickListener {
-
+                openMail(userDataModel.mail)
             }
         }
         callBt.apply {
             text = userDataModel.mobile
             setOnClickListener {
-
+                openDial(userDataModel.mobile)
             }
         }
     }
@@ -113,6 +116,29 @@ class MapsFragment : Fragment() {
         // after generating our bitmap we are returning our bitmap.
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
+
+    private fun openURL(url: String) {
+        val finalUrl = if (!url.startsWith("https://") && !url.startsWith("http://")){
+            "http://$url"
+        } else url
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(finalUrl)
+        activity?.startActivity(intent)
+    }
+
+    private fun openDial(mobile: String) {
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:$mobile")
+        activity?.startActivity(intent)
+    }
+
+    private fun openMail(mail: String) {
+        val emailIntent = Intent(Intent.ACTION_SEND);
+        emailIntent.type = "plain/text"
+        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, "to@email.com")
+        activity?.startActivity(Intent.createChooser(emailIntent, "Send mail..."))
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

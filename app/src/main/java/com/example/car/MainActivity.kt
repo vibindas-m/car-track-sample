@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import com.example.car.ui.UserViewModel
-import com.example.car.ui.main.MainFragment
 import org.koin.android.ext.android.get
 
 class MainActivity : AppCompatActivity() {

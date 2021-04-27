@@ -1,4 +1,4 @@
-package com.example.car.ui.user
+package com.example.car.ui.pages.user
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -60,9 +60,9 @@ class UsersListFragment : Fragment() {
 
     private val userListObserver = Observer<Result<List<UserDataModel>>> {
         if (it is Result.Loading) {
-            progressBar.show()
+            progressBar.visibility = View.VISIBLE
         } else {
-            progressBar.hide()
+            progressBar.visibility = View.GONE
             if (it is Result.Success) {
                 viewModel.updateUserList(it.data)
             }

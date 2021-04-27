@@ -1,6 +1,5 @@
-package com.example.car.ui.main
+package com.example.car.ui.pages.splash
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,30 +8,25 @@ import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.navigation.findNavController
 import com.example.car.R
-import kotlinx.android.synthetic.main.main_fragment.*
+import kotlinx.android.synthetic.main.splash_fragment.*
 
-class MainFragment : Fragment() {
+class SplashFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return inflater.inflate(R.layout.splash_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         carMotionLayout.apply {
-            setTransitionListener(object : MotionLayout.TransitionListener{
+            setTransitionListener(object : MotionLayout.TransitionListener {
                 override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
-//                    TODO("Not yet implemented")
                 }
 
                 override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
-//                    TODO("Not yet implemented")
                 }
 
                 override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
@@ -45,7 +39,6 @@ class MainFragment : Fragment() {
                     p2: Boolean,
                     p3: Float
                 ) {
-//                    TODO("Not yet implemented")
                 }
 
             })

@@ -5,7 +5,16 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.MainFragment">
+    tools:context=".ui.pages.splash.SplashFragment">
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_car_track"
+        android:layout_width="120dp"
+        android:layout_height="120dp"/>
 
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/carMotionLayout"
