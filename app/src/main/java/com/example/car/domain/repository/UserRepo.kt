@@ -2,7 +2,7 @@ package com.example.car.domain.repository
 
 
 import com.example.car.domain.model.Response
-import com.example.car.domain.model.User
+import com.example.car.data.User
 import retrofit2.await
 
 class UserRepo(private val userServices: UserServices) {

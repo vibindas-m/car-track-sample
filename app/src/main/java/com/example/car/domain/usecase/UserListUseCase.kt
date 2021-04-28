@@ -2,20 +2,24 @@ package com.example.car.domain.usecase
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.car.data.User
 import com.example.car.domain.model.*
 import com.example.car.domain.repository.UserRepo
+import com.example.car.domain.util.CustomCoroutineDispatcherProvider
 import com.example.car.ui.model.UserDataModel
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class UserListUseCase(private val userRepo: UserRepo) :
+internal class UserListUseCase(private val userRepo: UserRepo,
+                      private val customCoroutineDispatcherProvider: CustomCoroutineDispatcherProvider
+) :
     UseCase<LiveData<Result<List<UserDataModel>>>>,
     CoroutineScope,
     Cancellable {
     var job: Job? = null
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.IO
+        get() = customCoroutineDispatcherProvider.io
 
     override fun execute(): LiveData<Result<List<UserDataModel>>> {
         val result = MutableLiveData<Result<List<UserDataModel>>>()

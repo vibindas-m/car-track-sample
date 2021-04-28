@@ -18,7 +18,7 @@ class UserViewModelTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    lateinit var viewModel: UserViewModel
+    private lateinit var viewModel: UserViewModel
     private val getValidateUserUseCase = mockk<GetValidateUserUseCase>()
     private val userListUseCase = mockk<UserListUseCase>()
     private var userDataModel: UserDataModel? = null

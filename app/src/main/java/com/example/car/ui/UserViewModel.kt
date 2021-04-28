@@ -10,7 +10,7 @@ import com.example.car.domain.usecase.GetValidateUserUseCase
 import com.example.car.domain.usecase.UserListUseCase
 import com.example.car.ui.model.UserDataModel
 
-class UserViewModel(
+internal class UserViewModel(
     private val userListUseCase: UserListUseCase,
     private val getValidateUserUseCase: GetValidateUserUseCase
 ) : ViewModel() {

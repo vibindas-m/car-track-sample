@@ -1,4 +1,4 @@
-package com.example.car.domain.model
+package com.example.car.data
 
 data class User(
     val id: String?,

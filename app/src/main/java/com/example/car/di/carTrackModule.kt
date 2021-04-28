@@ -1,5 +1,6 @@
 package com.example.car.di
 
+import com.example.car.domain.util.CustomCoroutineDispatcherProvider
 import com.example.car.domain.room.UserDB
 import com.example.car.domain.room.UserRoom
 import com.example.car.domain.repository.ApiFactory
@@ -26,12 +27,13 @@ val carTrackModule = module {
         userDB.userDao()
     }
     single { UserRoom(get()) }
+    single { CustomCoroutineDispatcherProvider() }
     factory {
-        GetValidateUserUseCase(get())
+        GetValidateUserUseCase(get(), get())
     }
 
     factory {
-        UserListUseCase(get())
+        UserListUseCase(get(), get())
     }
     viewModel {
         UserViewModel(get(), get())

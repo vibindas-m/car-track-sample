@@ -4,7 +4,7 @@ interface UseCase <R> {
     fun execute(): R
 }
 
-interface UseCaseWithDate <P, R> {
+interface UseCaseWithParams <P, R> {
     fun execute(params: P): R
 }
 
