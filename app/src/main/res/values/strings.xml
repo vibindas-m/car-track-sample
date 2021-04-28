@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">Car</string>
+    <string name="app_name">Car Track</string>
+    <string name="welcome">Welcome</string>
+    <string name="user_name">User name</string>
+    <string name="password">Password</string>
+    <string name="country">Country</string>
+    <string name="login">LogIn</string>
+    <string name="address">Address</string>
+    <string name="company">Company</string>
 </resources>
