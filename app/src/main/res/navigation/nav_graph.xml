@@ -3,18 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/splashFragment"
         android:name="com.example.car.ui.pages.splash.SplashFragment"
         android:label="main_fragment"
         tools:layout="@layout/splash_fragment" >
         <action
             android:id="@+id/action_mainFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:launchSingleTop="false"
-            app:popUpTo="@id/mainFragment"
+            app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

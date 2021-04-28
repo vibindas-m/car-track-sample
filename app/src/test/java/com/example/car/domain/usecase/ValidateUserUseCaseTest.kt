@@ -2,6 +2,7 @@ package com.example.car.domain.usecase
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.car.MainCoroutineRule
+import com.example.car.domain.model.Event
 import com.example.car.domain.model.Result
 import com.example.car.domain.room.UserRoom
 import io.mockk.coEvery
@@ -44,13 +45,13 @@ class ValidateUserUseCaseTest {
         testCoroutineDispatcher.pauseDispatcher()
         val resultLiveData = useCase.execute(Pair("usr", "pwd"))
         val loadingResult = resultLiveData.getOrAwaitValue()
-        Assert.assertTrue(loadingResult is Result.Loading)
+        Assert.assertTrue(loadingResult.getContentIfNotHandled() is Result.Loading)
 
         testCoroutineDispatcher.resumeDispatcher()
         val successResult = resultLiveData.getOrAwaitValue()
-        Assert.assertTrue(successResult is Result.Success)
+        Assert.assertTrue(successResult.getContentIfNotHandled()is Result.Success)
 
-        Assert.assertEquals(true, (successResult as Result.Success).data)
+        Assert.assertEquals(true, (successResult.peekContent() as Result.Success).data)
     }
 
     @ExperimentalCoroutinesApi
@@ -60,11 +61,11 @@ class ValidateUserUseCaseTest {
         testCoroutineDispatcher.pauseDispatcher()
         val resultLiveData = useCase.execute(Pair("",""))
         val loadingResult = resultLiveData.getOrAwaitValue()
-        Assert.assertTrue(loadingResult is Result.Loading)
+        Assert.assertTrue(loadingResult.getContentIfNotHandled() is Result.Loading)
 
         testCoroutineDispatcher.resumeDispatcher()
         val successResult = resultLiveData.getOrAwaitValue()
-        Assert.assertTrue(successResult is Result.Failure)
+        Assert.assertTrue(successResult.getContentIfNotHandled() is Result.Failure)
     }
 
 }

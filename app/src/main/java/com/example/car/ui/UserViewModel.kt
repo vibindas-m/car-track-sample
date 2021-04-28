@@ -22,7 +22,7 @@ internal class UserViewModel(
         }
 
     internal val validateUserEventTrigger = MutableLiveData<Event<Pair<String, String>>>()
-    val validateUserEvent: LiveData<Result<Boolean>> =
+    val validateUserEvent: LiveData<Event<Result<Boolean>>> =
         Transformations.switchMap(validateUserEventTrigger) {
             it.getContentIfNotHandled()?.let { iit ->
                 getValidateUserUseCase.execute(iit)

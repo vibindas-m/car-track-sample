@@ -56,7 +56,6 @@ class MapsFragment : Fragment() {
         })
 
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f))
-        googleMap.uiSettings.isZoomGesturesEnabled = false
         googleMap.uiSettings.isScrollGesturesEnabled = false
 
     }

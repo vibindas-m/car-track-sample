@@ -12,7 +12,10 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.example.car.MainActivity
 import com.example.car.R
 import com.example.car.domain.model.Event
 import com.example.car.domain.model.Result
@@ -23,6 +26,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class LoginFragment : Fragment() {
 
     private val viewModel: UserViewModel by sharedViewModel()
+    private lateinit var mActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +37,7 @@ class LoginFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        mActivity = activity as MainActivity
         bindUI()
     }
 
@@ -72,16 +77,18 @@ class LoginFragment : Fragment() {
         )
     }
 
-    private val validateUserObserver = Observer<Result<Boolean>> {
-        if (it is Result.Loading) {
-            progressBar.visibility = View.VISIBLE
-        } else {
-            progressBar.visibility = View.GONE
-            if (it is Result.Success) {
-                findNavController().navigate(R.id.action_loginFragment_to_usersListFragment)
-            }
-            if (it is Result.Failure) {
-                showError(it.errorMsg)
+    private val validateUserObserver = Observer<Event<Result<Boolean>>> {
+        it.getContentIfNotHandled()?.let { result ->
+            if (result is Result.Loading) {
+                progressBar.visibility = View.VISIBLE
+            } else {
+                progressBar.visibility = View.GONE
+                if (result is Result.Success) {
+                    Navigation.findNavController(mActivity, R.id.nav_host_fragment).navigate(R.id.action_loginFragment_to_usersListFragment)
+                }
+                if (result is Result.Failure) {
+                    showError(result.errorMsg)
+                }
             }
         }
     }

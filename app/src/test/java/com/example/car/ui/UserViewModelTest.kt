@@ -124,15 +124,15 @@ class UserViewModelTest {
 
     @Test
     fun `validate user test`() {
-        val mockObserver = spyk(Observer<Result<Boolean>> {})
-        val useCaseResult = MutableLiveData<Result<Boolean>>()
-        useCaseResult.postValue(Result.Success(true))
+        val mockObserver = spyk(Observer<Event<Result<Boolean>>> {})
+        val useCaseResult = MutableLiveData<Event<Result<Boolean>>>()
+        useCaseResult.postValue(Event(Result.Success(true)))
         viewModel.validateUserEvent.observeForever(mockObserver)
         every { getValidateUserUseCase.execute(any()) } returns useCaseResult
         viewModel.validateUserEventTrigger.postValue(Event(Pair("user", "pwd")))
-        val slot = slot<Result<Boolean>>()
+        val slot = slot<Event<Result<Boolean>>>()
         verify { mockObserver.onChanged(capture(slot)) }
-        Assert.assertEquals(Result.Success(true), slot.captured)
+        Assert.assertEquals(Result.Success(true), slot.captured.getContentIfNotHandled())
         verify { getValidateUserUseCase.execute(Pair("user", "pwd")) }
     }
 

@@ -76,4 +76,5 @@ class UsersListFragment : Fragment() {
         errorText.visibility = View.VISIBLE
         errorText.text = errorMsg
     }
+
 }
